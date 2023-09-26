@@ -22,6 +22,8 @@ export default class App extends Component {
     };
   
     onToggleDone = (id) => {
+      
+     
       this.setState(({ todoData }) => {
         const idx = todoData.findIndex((el) => el.id === id);
         const oldItem = todoData[idx];
@@ -84,6 +86,7 @@ export default class App extends Component {
               status={status}
               saveCgange={this.saveCgange}
               startTimer={this.startTimer}
+              
             />
             <Footer
               todoCount={todoData.length - todoData.filter((el) => el.done).length}

@@ -19,7 +19,7 @@ export default class Task extends Component {
   };
 
   saveChange = (text) => {
-    if (text.keyCode === 13) {
+    if (text.keyCode === 13 || text.keyCode === 27 ) {
       text.preventDefault();
       if (text.target.value !== "") {
         this.setState({
@@ -30,10 +30,20 @@ export default class Task extends Component {
     }
   };
 
+
+  blureChange = (text) => {
+    this.setState({
+      inputText: text.target.value,
+      isRedaction: false,
+    });
+  }
+
   render() {
     const { label, onDeleted, onToggleDone, done, time } = this.props;
     const { isRedaction, inputText } = this.state;
     let changed = "";
+
+    
     if (done) {
       changed += "completed";
     }
@@ -42,14 +52,16 @@ export default class Task extends Component {
     }
 
     return (
-      <li className={changed}>
+      <li className={changed} >
         <div className="view">
-          <input className="toggle" id="title" type="checkbox" defaultChecked={done} onClick={onToggleDone} />
-          <label htmlFor="title">
-            <span className="title">{inputText}</span>
-            
-            <span className="description">created {formatDistanceToNow(time, { includeSeconds: true })} ago</span>
-          </label>
+          
+            <input className="toggle" type="checkbox" defaultChecked={done} onClick={onToggleDone} />
+            <label htmlFor="title">
+              <span className="title" >{inputText}</span>
+              
+              <span className="description">created {formatDistanceToNow(time, { includeSeconds: true })} ago</span>
+            </label>
+           
           <button type="button" label="edit" className="icon icon-edit" onClick={this.redactingTask} />
           <button type="button" label="destroy" className="icon icon-destroy" onClick={onDeleted} />
         </div>
@@ -59,6 +71,8 @@ export default class Task extends Component {
           className="edit"
           defaultValue={label}
           onKeyDown={this.saveChange}
+          onBlur={this.blureChange}
+          
         />
       </li>
     );

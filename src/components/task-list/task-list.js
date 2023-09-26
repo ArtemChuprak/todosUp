@@ -26,6 +26,7 @@ function TaskList ({ todos, onDeleted, onToggleDone, status, redactingTask })
           onDeleted={() => onDeleted(item.id)}
           onToggleDone={() => onToggleDone(item.id)}
           redactingTask={redactingTask}
+          id ={item.id}
         />
       ));
     return <ul className="todo-list">{elements}</ul>;
